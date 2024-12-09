@@ -362,3 +362,46 @@ int main() {
     optimalPageReplacement(pages, n, frameSize);
     return 0;
 }
+
+
+
+#include <stdio.h>
+int main() {
+    int page[50], frame[10], n, f, pageFaults = 0;
+    int i, j;
+    printf("Enter the number of pages: ");
+    scanf("%d", &n);
+    printf("Enter the page sequence: ");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &page[i]);
+    }
+    printf("Enter the frame size: ");
+    scanf("%d", &f);
+    for (i = 0; i < f; i++) {
+        frame[i] = -1;
+    }
+    printf("\nFrame Status\n");
+    for (i = 0; i < n; i++) {
+        int found = 0;
+        for (j = 0; j < f; j++) {
+            if (frame[j] == page[i]) {
+                found = 1;
+                break;
+            }
+        }
+        if (!found) {
+            frame[pageFaults % f] = page[i];
+            pageFaults++;
+        }
+        for (j = 0; j < f; j++) {
+            if (frame[j] != -1) {
+                printf("%d ", frame[j]);
+            } else {
+                printf("- ");
+            }
+        }
+        printf("\n");
+    }
+    printf("\nTotal page faults: %d\n", pageFaults);
+    return 0;
+}
